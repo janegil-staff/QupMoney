@@ -1,0 +1,82 @@
+"use client";
+import { useState } from "react";
+
+export default function EditGoalModal({ goal, onSave }) {
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState(goal.title);
+  const [targetAmount, setTargetAmount] = useState(goal.targetAmount);
+  const [currentAmount, setCurrentAmount] = useState(goal.currentAmount ?? 0);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await onSave({ ...goal, title, targetAmount, currentAmount });
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen(true)}
+        className="text-sm text-green-400 hover:underline"
+      >
+        Rediger
+      </button>
+
+      {open && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-gray-900 p-6 rounded-lg shadow-lg space-y-4 w-full max-w-md"
+          >
+            <h2 className="text-xl font-semibold text-white">
+              Rediger sparemål
+            </h2>
+
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 rounded text-white"
+              placeholder="Tittel"
+              required
+            />
+
+            <input
+              type="number"
+              value={targetAmount}
+              onChange={(e) => setTargetAmount(Number(e.target.value))}
+              className="w-full px-4 py-2 bg-gray-800 rounded text-white"
+              placeholder="Målbeløp"
+              required
+            />
+
+            <input
+              type="number"
+              value={currentAmount}
+              onChange={(e) => setCurrentAmount(Number(e.target.value))}
+              className="w-full px-4 py-2 bg-gray-800 rounded text-white"
+              placeholder="Nåværende beløp"
+              required
+            />
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="px-4 py-2 bg-gray-700 text-white rounded"
+              >
+                Avbryt
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-semibold"
+              >
+                Lagre
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+    </>
+  );
+}

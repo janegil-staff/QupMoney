@@ -2,6 +2,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
+import IncomeExpenseChart from "@/components/IncomeExpenseChart";
+import TransactionList from "@/components/TransactionList";
+import EditGoalModal from "@/components/EditGoalModal";
+import AddGoalWrapper from "@/components/AddGoalWrapper";
+import AddTransactionWrapper from "@/components/AddTransactionWrapper";
+import MonthlySummary from "@/components/MonthlySummary";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -37,53 +43,72 @@ export default async function DashboardPage() {
           Din økonomioversikt
         </h1>
 
+        {/* Chart Section */}
+        <IncomeExpenseChart transactions={transactions} />
+        <MonthlySummary transactions={transactions} />
+
         {/* Goals Section */}
         <section>
-          <h2 className="text-xl font-semibold mb-2">Sparemål</h2>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold">Sparemål</h2>
+            <AddGoalWrapper />
+          </div>
+
           {goals.length === 0 ? (
             <p className="text-gray-400">Ingen sparemål registrert.</p>
           ) : (
-            <ul className="space-y-2">
-              {goals.map((goal) => (
-                <li
-                  key={goal._id}
-                  className="bg-gray-900 p-4 rounded shadow flex justify-between items-center"
-                >
-                  <span>{goal.title}</span>
-                  <span className="text-green-400">{goal.targetAmount} kr</span>
-                </li>
-              ))}
+            <ul className="space-y-4">
+              {goals.map((goal) => {
+                const progress =
+                  goal.currentAmount && goal.targetAmount
+                    ? Math.min(
+                        (goal.currentAmount / goal.targetAmount) * 100,
+                        100
+                      )
+                    : 0;
+
+                return (
+                  <li
+                    key={goal._id}
+                    className="bg-gray-900 p-4 rounded shadow space-y-2"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium">{goal.title}</span>
+                      <span className="text-green-400">
+                        {goal.currentAmount ?? 0} / {goal.targetAmount} kr
+                      </span>
+                    </div>
+                    <div className="h-2 bg-gray-800 rounded">
+                      <div
+                        className="h-full bg-green-500 rounded"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                    <EditGoalModal
+                      goal={goal}
+                      onSave={async (updatedGoal) => {
+                        await fetch(`/api/goals/${goal._id}`, {
+                          method: "PUT",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify(updatedGoal),
+                        });
+                        location.reload();
+                      }}
+                    />
+                  </li>
+                );
+              })}
             </ul>
           )}
         </section>
 
         {/* Transactions Section */}
         <section>
-          <h2 className="text-xl font-semibold mb-2">Transaksjoner</h2>
-          {transactions.length === 0 ? (
-            <p className="text-gray-400">Ingen transaksjoner registrert.</p>
-          ) : (
-            <ul className="space-y-2">
-              {transactions.map((tx) => (
-                <li
-                  key={tx._id}
-                  className="bg-gray-900 p-4 rounded shadow flex justify-between items-center"
-                >
-                  <div>
-                    <p className="font-medium">{tx.description}</p>
-                    <p className="text-sm text-gray-400">{tx.date}</p>
-                  </div>
-                  <span
-                    className={`font-semibold ${
-                      tx.type === "income" ? "text-green-400" : "text-red-400"
-                    }`}
-                  >
-                    {tx.amount} kr
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-xl font-semibold">Transaksjoner</h2>
+            <AddTransactionWrapper />
+          </div>
+          <TransactionList transactions={transactions} />
         </section>
       </div>
     </main>
