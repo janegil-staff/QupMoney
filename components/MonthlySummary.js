@@ -5,7 +5,7 @@ export default function MonthlySummary({ transactions }) {
   const monthlyTotals = useMemo(() => {
     const map = {};
 
-    transactions.forEach((tx) => {
+    transactions?.forEach((tx) => {
       const date = new Date(tx.date);
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 

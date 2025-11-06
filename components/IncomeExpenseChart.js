@@ -14,7 +14,7 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 export default function IncomeExpenseChart({ transactions }) {
   const monthly = {};
 
-  transactions.forEach((tx) => {
+  transactions?.forEach((tx) => {
     const month = new Date(tx.date).toLocaleString("nb-NO", {
       month: "short",
       year: "numeric",

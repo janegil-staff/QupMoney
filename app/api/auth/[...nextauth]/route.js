@@ -17,7 +17,10 @@ export const authOptions = {
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) throw new Error("Bruker ikke funnet");
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) throw new Error("Feil passord");
 
         return {
@@ -46,7 +49,7 @@ export const authOptions = {
     signIn: "/login",
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt", // ✅ required for getToken()
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

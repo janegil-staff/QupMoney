@@ -6,6 +6,7 @@ export default function AddGoalModal({ onCreate }) {
   const [title, setTitle] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
   const [currentAmount, setCurrentAmount] = useState("");
+  const [month, setMonth] = useState(new Date().toISOString().slice(0, 7)); // "YYYY-MM"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,15 +14,18 @@ export default function AddGoalModal({ onCreate }) {
       title,
       targetAmount: Number(targetAmount),
       currentAmount: Number(currentAmount),
+      month, // ✅ required by backend
     });
     setTitle("");
     setTargetAmount("");
     setCurrentAmount("");
+    setMonth(new Date().toISOString().slice(0, 7));
     setOpen(false);
   };
 
   return (
     <>
+    
       <button
         onClick={() => setOpen(true)}
         className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold"
@@ -61,6 +65,14 @@ export default function AddGoalModal({ onCreate }) {
               onChange={(e) => setCurrentAmount(e.target.value)}
               className="w-full px-4 py-2 bg-gray-800 rounded text-white"
               placeholder="Nåværende beløp"
+              required
+            />
+
+            <input
+              type="month"
+              value={month}
+              onChange={(e) => setMonth(e.target.value)}
+              className="w-full px-4 py-2 bg-gray-800 rounded text-white"
               required
             />
 
