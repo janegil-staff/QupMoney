@@ -51,9 +51,9 @@ export default function TransactionList({ transactions }) {
                 className="bg-gray-900 p-4 rounded shadow flex justify-between items-center"
               >
                 <div>
-                  <p className="font-medium">{tx.description}</p>
+                  <p className="font-medium">{tx.category}</p>
                   <p className="text-sm text-gray-400">
-                    {tx.category} • {formattedDate}
+                    {tx.description} • {formattedDate}
                   </p>
                 </div>
 

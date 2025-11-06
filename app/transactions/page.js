@@ -89,6 +89,12 @@ export default function TransactionsPage() {
             <option value="Helse">Helse</option>
             <option value="Gaver">Gaver</option>
             <option value="Bolig">Bolig</option>
+            <option value="Bolig">Vin</option>
+            <option value="Bolig">Røyk</option>
+            <option value="Bolig">Snop</option>
+            <option value="Bolig">Sparing</option>
+            <option value="Bolig">Strøm</option>
+            <option value="Bolig">Regning</option>
           </select>
 
           {/* Note */}
@@ -96,7 +102,7 @@ export default function TransactionsPage() {
             name="description"
             value={form.description}
             onChange={handleChange}
-            placeholder="Notat (valgfritt)"
+            placeholder="Beskrivelse"
             className="w-full px-4 py-2 rounded bg-gray-800 text-white"
             rows={3}
           />

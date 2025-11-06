@@ -112,6 +112,7 @@ export default function GoalCard({ goal, onSave }) {
           </div>
         </>
       )}
+      
     </div>
   );
 }
