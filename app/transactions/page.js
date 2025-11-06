@@ -7,7 +7,7 @@ export default function TransactionsPage() {
     type: "expense",
     amount: "",
     category: "",
-    note: "",
+    description: "",
     date: new Date().toISOString().slice(0, 10),
   });
 
@@ -93,8 +93,8 @@ export default function TransactionsPage() {
 
           {/* Note */}
           <textarea
-            name="note"
-            value={form.note}
+            name="description"
+            value={form.description}
             onChange={handleChange}
             placeholder="Notat (valgfritt)"
             className="w-full px-4 py-2 rounded bg-gray-800 text-white"
