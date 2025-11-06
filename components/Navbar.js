@@ -29,7 +29,7 @@ export default function Navbar() {
         <div className="hidden sm:flex items-center gap-4 text-sm">
           <span className="text-gray-300">Hei, {session.user.name}</span>
           <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white"
           >
             Logg ut
@@ -64,7 +64,7 @@ export default function Navbar() {
           <Link href="/transactions" className="block px-4 py-2 rounded hover:bg-gray-800">Logg transaksjon</Link>
           <Link href="/goals" className="block px-4 py-2 rounded hover:bg-gray-800">Sparemål</Link>
           <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="w-full text-left px-4 py-2 rounded bg-red-600 hover:bg-red-700 text-white"
           >
             Logg ut
