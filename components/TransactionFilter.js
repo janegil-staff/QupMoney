@@ -38,6 +38,7 @@ export default function TransactionFilter({ onFilter }) {
       <input
         type="date"
         value={startDate}
+        placeholder="Velg måned"
         onChange={(e) => setStartDate(e.target.value)}
         className="bg-gray-800 text-white px-3 py-2 rounded"
       />

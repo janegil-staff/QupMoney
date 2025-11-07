@@ -97,10 +97,11 @@ export default function AddTransactionModal({ onCreate }) {
             </select>
 
             <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded text-white"
+              type="text"
+              name="month"
+              placeholder="Velg måned"
+              onFocus={(e) => (e.target.type = "month")}
+              className="w-full p-2 rounded bg-gray-800 text-white"
             />
 
             {error && <p className="text-red-400 text-sm">{error}</p>}
