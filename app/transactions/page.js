@@ -106,6 +106,7 @@ export default function TransactionsPage() {
             <option value="Abonnomanger">Abonnomanger</option>
             <option value="Husleie">Husleie</option>
             <option value="Narkotika">Narkotika</option>
+            <option value="Brukerkonto">Brukerkonto</option>
           </select>
 
           {/* Note */}
