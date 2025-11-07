@@ -23,13 +23,13 @@ export default function TransactionsPage() {
     const res = await fetch("/api/transactions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...form}),
+      body: JSON.stringify({ ...form }),
     });
 
     if (res.ok) {
       alert("Transaksjon lagret!");
       setForm({ ...form, amount: "", category: "", description: "" });
-      router.push("/dashboard"); 
+      router.push("/dashboard");
     } else {
       alert("Feil ved lagring");
     }
@@ -87,6 +87,7 @@ export default function TransactionsPage() {
             required
           >
             <option value="">Velg kategori</option>
+            <option value="Lønning">Lønning</option>
             <option value="Mat">Mat</option>
             <option value="Daglivarer">Daglivarer</option>
             <option value="Transport">Transport</option>
