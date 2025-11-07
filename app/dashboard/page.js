@@ -19,14 +19,15 @@ export default async function DashboardPage() {
 
   await connectDB();
 
-
-
-
   const rawTransactions = await Transaction.find({
     user: session.user.id,
-  }).lean();
+  })
+    .sort({
+      date: -1,
+    })
+    .lean();
 
- const rawGoals = await Goal.find({ user: session.user.id }).lean();
+  const rawGoals = await Goal.find({ user: session.user.id }).lean();
   const goals = JSON.parse(JSON.stringify(rawGoals));
   const transactions = JSON.parse(JSON.stringify(rawTransactions));
 

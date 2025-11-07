@@ -27,10 +27,10 @@ export async function POST(req) {
     );
   }
 }
-
+/*
 export async function GET() {
   const session = await getServerSession(authOptions);
-  console.log(session);
+
   if (!session || !session.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -40,6 +40,28 @@ export async function GET() {
   const transactions = await Transaction.find({ user: session.user.id }).sort({
     date: -1,
   });
+
+  return NextResponse.json(transactions);
+}
+*/
+
+export async function GET(req) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  await connectDB();
+
+  const { searchParams } = new URL(req.url);
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
+  const skip = (page - 1) * limit;
+
+  const transactions = await Transaction.find({ user: session.user.id })
+    .sort({ date: -1 })
+    .skip(skip)
+    .limit(limit);
 
   return NextResponse.json(transactions);
 }

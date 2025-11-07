@@ -1,9 +1,19 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import TransactionFilter from "./TransactionFilter";
 
-export default function TransactionList({ transactions }) {
+export default function TransactionList() {
   const [filters, setFilters] = useState({ type: "all", search: "" });
+  const [transactions, setTransactions] = useState([]);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    fetch(`/api/transactions?page=${page}&limit=10`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions((prev) => [...prev, ...data]);
+      });
+  }, [page]);
 
   const filtered = useMemo(() => {
     return transactions?.filter((tx) => {
@@ -60,9 +70,7 @@ export default function TransactionList({ transactions }) {
                 <div className="flex items-center gap-4">
                   <span
                     className={`font-semibold ${
-                      tx.type === "income"
-                        ? "text-green-400"
-                        : "text-red-400"
+                      tx.type === "income" ? "text-green-400" : "text-red-400"
                     }`}
                   >
                     {tx.amount} kr
@@ -90,6 +98,12 @@ export default function TransactionList({ transactions }) {
           })}
         </ul>
       )}
+      <button
+        onClick={() => setPage((prev) => prev + 1)}
+        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Last inn mer
+      </button>
     </section>
   );
 }
