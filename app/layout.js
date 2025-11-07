@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Sparemål",
+  title: "Qup Money",
   description: "Din norske økonomiassistent",
   icons: {
     icon: "/favicon.ico",

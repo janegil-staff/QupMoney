@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/dashboard" className="text-xl font-bold text-green-400">
-          ØkonomiTracker
+          QupMoney
         </Link>
 
         {/* Desktop Links */}
