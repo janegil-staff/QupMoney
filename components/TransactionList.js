@@ -73,7 +73,7 @@ export default function TransactionList({transactions}) {
                       tx.type === "income" ? "text-green-400" : "text-red-400"
                     }`}
                   >
-                    {tx.amount} kr
+                    {tx.amount.toFixed(2)} kr
                   </span>
 
                   <button
